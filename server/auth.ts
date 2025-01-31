@@ -8,7 +8,6 @@ export const passportConfig=(passport: PassportStatic) => {
     const opts: StrategyOptions = {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.JWT_SECRET as string,
-
     }
     passport.use(
         new JwtStrategy(opts, async (token, done) => {

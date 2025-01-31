@@ -1,7 +1,11 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import authrouter from "./src/routes/auth";
+import {passportConfig} from "./auth";
+import passport from "passport";
+
 dotenv.config();
+passportConfig(passport);
 
 const app = express();
 const port = process.env.PORT || 3000;
