@@ -12,6 +12,7 @@ class Product extends Model {
 Product.init({
     id:{
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
     },
     name:{
@@ -23,6 +24,7 @@ Product.init({
     },
     createdAt: {
         type: DataTypes.DATE,
+
         allowNull: false,
     },
     updatedAt: {

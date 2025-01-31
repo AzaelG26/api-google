@@ -1,5 +1,6 @@
 import express from 'express';
 import {loginController, registerController} from "../controllers/authController";
+import {getProduct} from "../controllers/productsController";
 import {passportConfig} from '../../auth';
 import passport from "passport";
 
