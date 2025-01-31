@@ -34,7 +34,7 @@ Order.init({
     },
     total: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0.00,
     },
     createdAt: {
