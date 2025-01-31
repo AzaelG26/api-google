@@ -36,7 +36,6 @@ const registerController = async (req: Request, res: Response) => {
     console.log(existingUser);
     if(existingUser){
         res.status(401).json({message:'User already exists'});
-        console.log('ayuda pendejos',existingUser);
         return;
     }
 

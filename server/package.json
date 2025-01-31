@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.ts"
+    "start": "nodemon app.ts",
+    "migrate": "cd database && npx sequelize-cli db:migrate",
+    "migrate:create": "cd database && npx sequelize-cli migration:generate --name",
+    "create:seed": "cd database && npx sequelize-cli seed:generate --name",
+    "migrate:undo": "cd database && npx sequelize-cli db:migrate:undo",
+    "seed:undo": "cd database && npx sequelize-cli db:seed:undo",
+    "seed:all": "cd database && npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
