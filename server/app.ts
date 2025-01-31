@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import authrouter from "./src/routes/auth";
+import authRouter from "./src/routes/auth";
 import productRoutes from "./src/routes/products";
 import {passportConfig} from "./auth";
 import passport from "passport";
@@ -18,10 +18,11 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-app.get('/', (req, res) => {
-    res.send('Hola mundo');
-});
-
 app.use('/products', productRoutes);
-app.use('/auth', authrouter);
+app.use('/auth', authRouter);
+
+
+app.get('/', async (req, res) => {
+    res.json('Hello World!');
+})
 
