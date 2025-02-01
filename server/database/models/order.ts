@@ -14,6 +14,7 @@ Order.init({
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
     },
     user_id:{
         type: DataTypes.UUID,

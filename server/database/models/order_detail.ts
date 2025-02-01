@@ -3,8 +3,8 @@ import sequelize from '../db';
 
 class Order_detail extends Model {
     public id!: number;
-    public orderId!: number;
-    public productId!: number;
+    public order_id!: number;
+    public product_id!: number;
     public quantity!: number;
     public createdAt!: Date;
     public updatedAt!: Date;
@@ -14,6 +14,7 @@ Order_detail.init({
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
     },
     order_id:{
         type: DataTypes.INTEGER,
