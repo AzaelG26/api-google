@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import authRouter from "./src/routes/auth";
 import productRoutes from "./src/routes/products";
+import Roles  from "./src/routes/roles";
 import {passportConfig} from "./auth";
 import passport from "passport";
 
@@ -20,6 +21,7 @@ app.listen(port, () => {
 
 app.use('/products', productRoutes);
 app.use('/auth', authRouter);
+app.use('/roles', Roles);
 
 
 app.get('/', async (req, res) => {

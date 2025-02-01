@@ -4,6 +4,9 @@ import  dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import User from "../../database/models/user";
 import {use} from "passport";
+import user_rol from "../../database/models/user_rol";
+import User_rol from "../../database/models/user_rol";
+import Role from "../../database/models/roles";
 dotenv.config();
 
 const loginController = async (req: Request, res: Response) => {
@@ -41,7 +44,16 @@ const registerController = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({email, password: hashedPassword});
+    const rolName = await Role.findOne({where: {rol_name: 'customer'}});
+    if(!rolName){
+        res.status(401).json({message:"Rol not found"});
+        return;
+    }
 
+    const creatingUserRol = await User_rol.create({
+        user_id: user.id,
+        rol_id: rolName.id,
+    })
     res.status(200).json({message:'User creado correctamente'});
 }
 

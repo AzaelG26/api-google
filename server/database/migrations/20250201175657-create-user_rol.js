@@ -9,25 +9,37 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('roles', {
+    await queryInterface.createTable('user_rol', {
       id:{
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      rol_name:{
-        type: Sequelize.STRING,
+      user_id:{
+        type: Sequelize.UUID,
         allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
-      createdAt: {
+      rol_id:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'roles',
+          key: 'id'
+        }
+      },
+      createdAt:{
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updatedAt: {
+      updatedAt:{
         type: Sequelize.DATE,
         allowNull: false,
       }
-    });
+    })
   },
 
   async down (queryInterface, Sequelize) {
@@ -37,6 +49,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('roles');
+    await queryInterface.dropAllEnums('user_rol');
   }
 };
