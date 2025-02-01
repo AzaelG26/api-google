@@ -5,6 +5,9 @@ import productRoutes from "./src/routes/products";
 import Roles  from "./src/routes/roles";
 import {passportConfig} from "./auth";
 import passport from "passport";
+import orderRoute from "./src/routes/order.route";
+import personalData from "./database/models/personalData";
+import user from "./database/models/user";
 
 dotenv.config();
 
@@ -22,9 +25,22 @@ app.listen(port, () => {
 app.use('/products', productRoutes);
 app.use('/auth', authRouter);
 app.use('/roles', Roles);
+app.use('/orders', orderRoute)
+
 
 
 app.get('/', async (req, res) => {
-    res.json('Hello World!');
+    const finduser = await user.findOne({where: {email:'sebas@gmail.com'}})
+    if(!finduser){
+        res.status(401).json({message:'User not found'});
+        return;
+    }
+    const userData = await personalData.create({
+        name: 'azael es un pendejo',
+        address: 'calle culera',
+        last_name: 'y un estupido',
+        age: '22',
+        user_id: finduser.id})
+    res.status(200).json({userData})
 })
 

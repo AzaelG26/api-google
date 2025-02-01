@@ -1,11 +1,13 @@
 // database/models/user.ts
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../db';
+import PersonalData from "./personalData";
 
 class User extends Model {
     public id!: number;
     public email!: string;
     public password!: string;
+    public personalData!: PersonalData;
     public createdAt!: Date;
     public updatedAt!: Date;
 }

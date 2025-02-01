@@ -14,6 +14,7 @@ Order.init({
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
     },
     user_id:{
         type: DataTypes.UUID,
@@ -34,7 +35,7 @@ Order.init({
     },
     total: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0.00,
     },
     createdAt: {
