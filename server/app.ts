@@ -14,7 +14,6 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-
 app.use(express.json());
 passportConfig(passport);
 
@@ -26,8 +25,6 @@ app.use('/products', productRoutes);
 app.use('/auth', authRouter);
 app.use('/roles', Roles);
 app.use('/orders', orderRoute)
-
-
 
 app.get('/', async (req, res) => {
     const finduser = await user.findOne({where: {email:'sebas@gmail.com'}})
@@ -43,4 +40,3 @@ app.get('/', async (req, res) => {
         user_id: finduser.id})
     res.status(200).json({userData})
 })
-
