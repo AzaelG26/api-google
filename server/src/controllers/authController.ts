@@ -27,7 +27,7 @@ const loginController = async (req: Request, res: Response) => {
     const token = jwt.sign({id:user.id, role: '1'},process.env.JWT_SECRET as string,{expiresIn: '1h'});
 
     res.status(200).json({
-        message:'Bienvenido',
+        message:'Welcome!',
         token:token
     });
 };
@@ -40,6 +40,10 @@ const registerController = async (req: Request, res: Response) => {
     if(existingUser){
         res.status(401).json({message:'User already exists'});
         return;
+    }
+    if(!email || !password){
+        res.status(401).json({message: 'Email and password are required'})
+        return
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -54,7 +58,7 @@ const registerController = async (req: Request, res: Response) => {
         user_id: user.id,
         rol_id: rolName.id,
     })
-    res.status(200).json({message:'User creado correctamente'});
+    res.status(200).json({message:'User created succesfully'});
 }
 
 export {loginController, registerController};

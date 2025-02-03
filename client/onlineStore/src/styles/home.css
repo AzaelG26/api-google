@@ -1,0 +1,11 @@
+body{
+    overflow-y: auto;
+}
+.principal-image{
+    position: fixed;
+    background-image: url("/front-view-woman-with-hat.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 70%;
+}
