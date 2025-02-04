@@ -1,4 +1,6 @@
 import {Request, Response} from 'express';
+import { RequestHandler } from "express";
+
 import  bcrypt from 'bcryptjs';
 import  dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
@@ -32,7 +34,7 @@ const loginController = async (req: Request, res: Response) => {
     });
 };
 
-const registerController = async (req: Request, res: Response) => {
+const registerController: RequestHandler = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({where:{email}})
@@ -45,6 +47,7 @@ const registerController = async (req: Request, res: Response) => {
         res.status(401).json({message: 'Email and password are required'})
         return
     }
+
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({email, password: hashedPassword});
