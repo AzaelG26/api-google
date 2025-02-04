@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/men.css';
 import axios from 'axios';
+import { API_CLOTHES } from '../auth/constants';
 
 interface Product {
     id: number;
@@ -18,14 +19,15 @@ const MenPage: React.FC = () => {
     // Llama a la API para obtener los productos
     const fetchProducts = async () => {
         try {
-            const token = "TU_TOKEN_JWT";
-            const response = await axios.get('http://localhost:3000/api/products/catalog', {
+            const token = localStorage.getItem("token");
+            const response = await axios.get(`${API_CLOTHES}/catalog`, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             setProducts(response.data);
-        } catch (err: any) {
+        } catch (err) {
             console.error("Error al cargar los productos:", err);
             setError("No se pudieron cargar los productos. Intenta nuevamente.");
         } finally {
@@ -52,6 +54,10 @@ const MenPage: React.FC = () => {
     const handleAddToCart = (productId: number) => {
         handleQuantityChange(productId, 1);
     };
+
+
+    const filteredProducts = products.filter(product => product.category === 'men');
+
     return (
         <div className="men-container">
             <h1 className="men-title">Colección Hombre</h1>
@@ -61,8 +67,8 @@ const MenPage: React.FC = () => {
             {error && <p className="error-message">{error}</p>}
 
             <div className="product-list">
-                {!loading && !error && products.length > 0 ? (
-                    products.map((product) => (
+                {!loading && !error && filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
                         <div key={product.id} className="product-item">
                             <h3 className="product-name">{product.name}</h3>
                             <p className="product-price">${product.price}</p>

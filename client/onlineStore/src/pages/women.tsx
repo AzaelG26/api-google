@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/women.css';
 import axios from 'axios';
+import {API_CLOTHES} from "../auth/constants.ts";
 
 interface Product {
     id: number;
     name: string;
     category?: string;
-    price?: number; // Incluye campos adicionales según la respuesta de la API
+    price?: number;
 }
 
 const Women: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]); // Estado para los productos
+    const [products, setProducts] = useState<Product[]>([]);
     const [cart, setCart] = useState<{ [key: number]: number }>({}); // Estado para el carrito
     const [loading, setLoading] = useState<boolean>(true); // Estado para la carga
     const [error, setError] = useState<string | null>(null); // Estado para manejar errores
@@ -18,10 +19,11 @@ const Women: React.FC = () => {
     // Función para traer los productos del backend
     const fetchProducts = async () => {
         try {
-            const token = "TU_TOKEN_JWT"; // Reemplaza esto si estás usando autenticación con JWT
-            const response = await axios.get('http://localhost:3000/api/products/catalog', {
+            const token = localStorage.getItem("token");
+            const response = await axios.get(`${API_CLOTHES}/catalog`, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Enviar el token si es necesario
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             setProducts(response.data); // Guardar los productos en el estado
@@ -56,6 +58,9 @@ const Women: React.FC = () => {
         handleQuantityChange(productId, 1);
     };
 
+    // Filtrar productos por categoría "women"
+    const filteredProducts = products.filter(product => product.category === 'women');
+
     // Renderización
     return (
         <div className="catalog-container">
@@ -65,8 +70,8 @@ const Women: React.FC = () => {
             {error && <p className="error-message">{error}</p>}
 
             <ul className="product-list">
-                {!loading && !error && products.length > 0 ? (
-                    products.map((product) => (
+                {!loading && !error && filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
                         <li key={product.id} className="product-item">
                             <span className="product-name">{product.name}</span>
                             <div className="quantity-controls">

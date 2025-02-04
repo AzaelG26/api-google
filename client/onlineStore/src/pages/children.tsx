@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/children.css';
 import axios from 'axios';
+import {API_CLOTHES} from "../auth/constants.ts";
 
 // Interfaz para representar un producto
 interface Product {
     id: number;
     name: string;
     description: string;
+    category?: string;
     price?: number; // Puedes agregar más propiedades si son enviadas desde el backend
 }
 
@@ -16,13 +18,14 @@ const Children: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true); // Estado para indicar carga
     const [error, setError] = useState<string | null>(null); // Estado para manejar errores
 
-    // Función para obtener los productos de la API
+
     const fetchProducts = async () => {
         try {
-            const token = "TU_TOKEN_JWT"; // Reemplaza con tu token si es necesario
-            const response = await axios.get('http://localhost:3000/api/products/catalog', {
+            const token = localStorage.getItem("token");
+            const response = await axios.get(`${API_CLOTHES}/catalog`, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Este encabezado solo si es necesario
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             setProducts(response.data); // Ajustamos el estado con los productos
@@ -57,6 +60,9 @@ const Children: React.FC = () => {
         handleQuantityChange(productId, 1);
     };
 
+    // Filtrar productos por categoría "children"
+    const filteredProducts = products.filter(product => product.category === 'children');
+
     // Renderización
     return (
         <div className="catalog-container">
@@ -66,8 +72,8 @@ const Children: React.FC = () => {
             {error && <p className="error-message">{error}</p>}
 
             <ul className="product-list">
-                {!loading && !error && products.length > 0 ? (
-                    products.map((product) => (
+                {!loading && !error && filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
                         <li key={product.id} className="product-item">
                             <div className="product-info">
                                 <h3 className="product-name">{product.name}</h3>

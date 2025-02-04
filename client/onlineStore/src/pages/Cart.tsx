@@ -5,7 +5,6 @@ import '../styles/cart.css';
 const Cart: React.FC = () => {
     const { cart, removeFromCart, updateQuantity, getTotal } = useCart();
 
-    // Costo fijo de envío (puedes hacerlo dinámico si es necesario)
     const shippingCost = 10.0;
 
     return (
