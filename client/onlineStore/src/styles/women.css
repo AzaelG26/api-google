@@ -1,0 +1,36 @@
+.women-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.women-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.woman-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.woman-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.woman-description {
+    font-size: 14px;
+    color: #7f8c8d;
+}

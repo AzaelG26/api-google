@@ -3,6 +3,8 @@ import Header from "./components/Header.tsx";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/login.tsx";
 import MenPage from "./pages/men.tsx";
+import Women from "./pages/women.tsx";
+import Children from "./pages/children.tsx";
 import React from "react";
 
 const AppContent: React.FC = () => {
@@ -19,6 +21,8 @@ const AppContent: React.FC = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/men" element={<MenPage />} />
+                <Route path="/women" element={<Women />} />
+                <Route path="/children" element={<Children />} />
             </Routes>
         </div>
     );

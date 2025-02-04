@@ -9,6 +9,8 @@ import {AuthProvider} from "./auth/AuthProvider.tsx";
 import HomeLayout from "./layouts/HomeLayout.tsx";
 import MenPage from "./pages/men.tsx";
 import Home from "./pages/Home.tsx";
+import Women from "./pages/women.tsx";
+import Children from "./pages/children.tsx";
 import Cart from "./pages/Cart.tsx";
 
 const router = createBrowserRouter([
@@ -25,11 +27,20 @@ const router = createBrowserRouter([
                 element: <MenPage />,
             },
             {
+                path: 'women',
+                element: <Women />,
+            },
+            {
+                path: 'children',
+                element: <Children />,
+            },
+            {
                 path: '/cart',
                 element: <Cart/>
             }
         ],
     },
+    
     {
         path:'/login',
         element: <Login/>
