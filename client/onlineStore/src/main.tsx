@@ -13,6 +13,8 @@ import Women from "./pages/women.tsx";
 import Children from "./pages/children.tsx";
 import Cart from "./pages/Cart.tsx";
 
+
+
 const router = createBrowserRouter([
     {
         path: '/',

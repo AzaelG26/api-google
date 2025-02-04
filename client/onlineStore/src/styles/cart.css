@@ -1,14 +1,129 @@
-.container-view-cart{
+.cart-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: auto;
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cart-items {
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.item-name {
+    font-size: 18px;
+    color: #333;
+}
+
+.item-price {
+    font-size: 16px;
+    color: #777;
+}
+
+.item-quantity {
+    display: flex;
     align-items: center;
 }
-.second{
+
+.quantity-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 0 5px;
+    font-size: 16px;
+}
+
+.quantity-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.quantity-display {
+    font-size: 16px;
+    color: #333;
+}
+
+.remove-item-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.remove-item-button:hover {
+    background-color: #c82333;
+}
+
+.cart-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.summary-item {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-    margin-top: 1%;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.summary-label {
+    font-size: 16px;
+    color: #333;
+}
+
+.summary-value {
+    font-size: 16px;
+    color: #333;
+}
+
+.checkout-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.checkout-button:hover {
+    background-color: #218838;
 }
