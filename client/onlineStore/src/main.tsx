@@ -34,11 +34,13 @@ const router = createBrowserRouter([
                 path: 'children',
                 element: <Children />,
             },
+            {
                 path: '/cart',
                 element: <Cart/>
             }
         ],
     },
+    
     {
         path:'/login',
         element: <Login/>
