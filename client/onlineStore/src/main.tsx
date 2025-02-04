@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signup from "./routes/Signup.tsx";
 import Dashboard from "./routes/Dashboard.tsx";
@@ -9,12 +8,17 @@ import ProtectedRoute from './routes/protectedRoute.tsx'
 import {AuthProvider} from "./auth/AuthProvider.tsx";
 import HomeLayout from "./layouts/HomeLayout.tsx";
 import MenPage from "./pages/men.tsx";
+import Home from "./pages/Home.tsx";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <HomeLayout />,
         children: [
+            {
+                path: '/',
+                element: <Home/>
+            },
             {
                 path: 'men',
                 element: <MenPage />,

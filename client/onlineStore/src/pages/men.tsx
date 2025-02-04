@@ -1,12 +1,14 @@
+import React from 'react';
 import '../styles/men.css';
+
 
 const images = [
     '/path/to/image1.jpg',
     '/path/to/image2.jpg',
     '/path/to/image3.jpg',
-];
+]
 
-const MenPage = () => {
+const MenPage:React.FC = () => {
     return (
         <div className="men-container">
             {}
