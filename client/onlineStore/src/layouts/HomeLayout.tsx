@@ -8,7 +8,7 @@ const HomeLayout: React.FC = () => {
         <div>
             <header className="header">
                 <div className="logo">
-                    <h1>DA Clothes</h1>
+                    <h1>GARCIA SHOP</h1>
                 </div>
 
                 <nav className="nav">

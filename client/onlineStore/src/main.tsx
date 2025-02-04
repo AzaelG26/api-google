@@ -8,17 +8,23 @@ import Login from "./routes/Login.tsx";
 import ProtectedRoute from './routes/protectedRoute.tsx'
 import {AuthProvider} from "./auth/AuthProvider.tsx";
 import HomeLayout from "./layouts/HomeLayout.tsx";
+import MenPage from "./pages/men.tsx";
 
 const router = createBrowserRouter([
     {
-
-        path:'/',
-        element: <HomeLayout/>
-    },{
+        path: '/',
+        element: <HomeLayout />,
+        children: [
+            {
+                path: 'men',
+                element: <MenPage />,
+            },
+        ],
+    },
+    {
         path:'/login',
         element: <Login/>
     },
-
     {
         path: '/signup',
         element: <Signup/>
