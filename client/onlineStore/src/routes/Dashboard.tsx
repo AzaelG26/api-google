@@ -33,7 +33,6 @@ const Dashboard:React.FC = () => {
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(productData),
-
             });
 
             if (response.ok) {
@@ -51,7 +50,9 @@ const Dashboard:React.FC = () => {
 
     return (
         <div className="container-dashboard">
-            <nav className="nav-dashboard"></nav>
+            <nav className="nav-dashboard">
+                <h3>Hola Azael</h3>
+            </nav>
             <h1>¡Bienvenido!</h1>
             <section className="add-products">
 
