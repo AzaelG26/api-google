@@ -15,19 +15,24 @@ const getProduct = async (req: Request, res: Response) => {
 
 const createProduct = async (req: Request, res: Response) => {
     try{
-        const item = req.body;
-        if(!item){
-            res.status(400).json({message:'Product required'});
+        const {name, category, price} = req.body;
+        if(!name || !category || !price){
+            res.status(400).json({message: 'Missing required fields'});
             return
         }
-        const newProduct = await Product.create(item);
+        const newProduct = await Product.create({name, category, price});
+
         res.status(200).json({
             message: "Product created successfully",
             product: newProduct
         });
 
     }catch(err){
-        res.status(500).json({message:'Something went wrong'});
+        // Respuesta bien formada, asegurando que siempre haya un mensaje JSON
+        res.status(500).json({
+            message: "Algo salió mal al crear el producto",
+            error: err instanceof Error ? err.message : JSON.stringify(err)
+        });
 
     }
 };

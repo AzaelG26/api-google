@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import authRouter from "./src/routes/auth";
 import productRoutes from "./src/routes/products";
 import Roles  from "./src/routes/roles";
+import personaldata from "./src/routes/personal.data"
 import {passportConfig} from "./auth";
 import passport from "passport";
 import orderRoute from "./src/routes/order.route";
@@ -29,6 +30,7 @@ app.listen(port, () => {
 app.use('/products', productRoutes);
 app.use('/auth', authRouter);
 app.use('/roles', Roles);
-app.use('/orders', orderRoute)
+app.use('/orders', orderRoute);
+app.use('/personaldata', personaldata);
 
 
