@@ -25,15 +25,9 @@ export default  function Signup(){
             });
             const data = await response.json();
             if(response.ok) {
-                if (response.ok) {
-                    console.log("Datos antes de guardar en auth:", data); // Verifica el contenido del objeto data
-                    auth.saveUser(data);
-                    goTo('/dashboard');
-                }
-
                 setErrorResponse("");
+                goTo('/login');
                 alert(data.message)
-                goTo('/');
             }
             else{
                 console.log("Sometime went wrong", data.message)

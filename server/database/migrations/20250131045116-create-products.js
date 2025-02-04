@@ -19,6 +19,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      category:{
+        type: Sequelize.ENUM,
+        values: ['men', 'women', 'children'],
+        allowNull: false
+      },
       price:{
         type: Sequelize.INTEGER,
 

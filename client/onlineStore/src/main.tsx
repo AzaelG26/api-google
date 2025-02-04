@@ -11,6 +11,7 @@ import MenPage from "./pages/men.tsx";
 import Home from "./pages/Home.tsx";
 import Women from "./pages/women.tsx";
 import Children from "./pages/children.tsx";
+import Cart from "./pages/Cart.tsx";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
                 element: <Home/>
             },
             {
-                path: 'men',
+                path: '/men',
                 element: <MenPage />,
             },
             {
@@ -33,6 +34,9 @@ const router = createBrowserRouter([
                 path: 'children',
                 element: <Children />,
             },
+                path: '/cart',
+                element: <Cart/>
+            }
         ],
     },
     {

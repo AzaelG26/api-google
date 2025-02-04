@@ -1,0 +1,32 @@
+.nav-dashboard{
+    width: 100%;
+    height: 50px;
+    background-color: rgba(128, 128, 128, 0.59);
+    border-bottom: 1px solid gray;
+    margin-bottom: 20px;
+}
+.container-dashboard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.add-products{
+    margin-top: 2pc;
+    width: 60%;
+    height: 60vh;
+    color: white;
+    padding: 30px;
+    border-radius: 9px;
+    background-color: #333333;
+    overflow-y: auto;
+}
+.add-products input,select, button{
+    margin: 20px;
+    width: 70%;
+    border-radius: 9px;
+    height: 30px;
+    border: none;
+}
+.add-products button{
+    width: 20%;
+}
