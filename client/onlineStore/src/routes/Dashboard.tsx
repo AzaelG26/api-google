@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import '../styles/dashboard.css'
 import {API_PRODUCTS} from "../auth/constants.ts";
+import PersonalData from "../components/personalData.tsx";
 
 const Dashboard:React.FC = () => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState(0)
 
     const handleRegister = async () => {
 
@@ -29,7 +30,7 @@ const Dashboard:React.FC = () => {
             const response = await fetch(`${API_PRODUCTS}/createProduct`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(productData),
@@ -39,9 +40,12 @@ const Dashboard:React.FC = () => {
                 alert('Product added successfully');
                 setName('');
                 setCategory('');
+                setPrice(0)
             } else {
                 alert('Hubo un problema al registrar el producto.');
-
+                const errorResult = await response.json();
+                alert(`Error: ${errorResult.message || "Error desconocido"}`);
+                console.error("Respuesta del servidor (error):", errorResult);
             }
         } catch (e) {
             alert('Error al enviar los datos. Revisa la consola para más información.' + e);
@@ -50,10 +54,9 @@ const Dashboard:React.FC = () => {
 
     return (
         <div className="container-dashboard">
-            <nav className="nav-dashboard">
-                <h3>Hola Azael</h3>
-            </nav>
+
             <h1>¡Bienvenido!</h1>
+            <PersonalData/>
             <section className="add-products">
 
                 <h2>Products</h2>
@@ -77,7 +80,7 @@ const Dashboard:React.FC = () => {
                 <label>Price</label> <br/>
                 <input
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}/> <br/>
+                    onChange={(e) => setPrice(parseInt(e.target.value))}/> <br/>
                 <br/>
                 <button onClick={handleRegister}>Registrar</button>
             </section>
