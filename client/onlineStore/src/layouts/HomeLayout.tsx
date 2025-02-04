@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/home.css"
 import "../styles/header.css";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 const HomeLayout: React.FC = () => {
     return (
@@ -30,7 +30,9 @@ const HomeLayout: React.FC = () => {
                     </Link>
                 </div>
             </header>
-            <div className="principal-image" ></div>
+            <main>
+                <Outlet/>
+            </main>
         </div>
     );
 }
