@@ -9,6 +9,7 @@ import {AuthProvider} from "./auth/AuthProvider.tsx";
 import HomeLayout from "./layouts/HomeLayout.tsx";
 import MenPage from "./pages/men.tsx";
 import Home from "./pages/Home.tsx";
+import Cart from "./pages/Cart.tsx";
 
 const router = createBrowserRouter([
     {
@@ -20,9 +21,13 @@ const router = createBrowserRouter([
                 element: <Home/>
             },
             {
-                path: 'men',
+                path: '/men',
                 element: <MenPage />,
             },
+            {
+                path: '/cart',
+                element: <Cart/>
+            }
         ],
     },
     {

@@ -4,6 +4,7 @@ import sequelize from '../db';
 class Product extends Model {
     public id!: number;
     public name!: string;
+    public category!: string;
     public price!: number;
     public createdAt!: Date;
     public updatedAt!: Date;
@@ -15,6 +16,11 @@ Product.init({
         autoIncrement: true,
         primaryKey: true,
     },
+        category:{
+            type: DataTypes.ENUM,
+            values: ['men', 'women', 'children'],
+            allowNull: false
+        },
     name:{
         type: DataTypes.STRING,
         allowNull: false,
