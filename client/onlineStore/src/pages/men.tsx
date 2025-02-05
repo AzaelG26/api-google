@@ -34,7 +34,10 @@ const MenPage: React.FC = () => {
         } catch (err) {
             console.error("Error al cargar los productos:", err);
             setError("No se pudieron cargar los productos. Intenta nuevamente.");
+            alert(err)
         } finally {
+            alert('err')
+
             setLoading(false);
         }
     };

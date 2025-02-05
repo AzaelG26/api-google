@@ -37,11 +37,12 @@ const router = createBrowserRouter([
                 path: 'children',
                 element: <Children />,
             },
-            {
-                path: '/cart',
-                element: <Cart/>
-            }
+
         ],
+    },
+    {
+        path: '/cart',
+        element: <Cart/>
     },
     
     {
@@ -69,9 +70,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
+    //<React.StrictMode>
         <AuthProvider>
             <RouterProvider router={router}/>
         </AuthProvider>
-    </React.StrictMode>
+    //</React.StrictMode>
 );

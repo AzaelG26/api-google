@@ -13,6 +13,25 @@ const getProduct = async (req: Request, res: Response) => {
     }
 }
 
+const getProductFromCart = async (req: Request, res: Response) => {
+    const {id} = req.body;
+    if(!id || !Array.isArray(id) || id.length === 0){
+        res.status(400).json({message: 'Missing required fields'});
+        return;
+    }
+    try{
+        const products = await Product.findAll({where: {id: id}});
+        if(!products || products.length === 0){
+            res.status(404).json({message: 'Product not found'});
+            return;
+        }
+
+        res.status(200).json({products: products});
+    }catch(err){
+        res.status(500).json({message: 'Something went wrong'});
+    }
+};
+
 const createProduct = async (req: Request, res: Response) => {
     try{
         const {name, category, price} = req.body;
@@ -37,4 +56,4 @@ const createProduct = async (req: Request, res: Response) => {
     }
 };
 
-export { getProduct, createProduct };
+export { getProduct, getProductFromCart, createProduct };

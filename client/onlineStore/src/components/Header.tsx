@@ -19,7 +19,7 @@ const Header: React.FC = () => {
             </nav>
 
             <div className="options-user">
-                <Link to="/carrito" >
+                <Link to="/cart" >
                     <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/shopping-cart--v1.png" alt="shopping-cart--v1"/>
                 </Link>
 

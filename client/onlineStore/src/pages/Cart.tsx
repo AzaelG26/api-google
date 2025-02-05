@@ -1,73 +1,116 @@
-import React from 'react';
-import { useCart } from '../context/CartContext'; // Importamos el contexto del carrito
+import React, {useEffect, useState} from 'react';
 import '../styles/cart.css';
+import {API_CLOTHES, API_CREATE_ORDER} from "../auth/constants.ts";
+import {jwtDecode} from "jwt-decode";
 
+
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+}
 const Cart: React.FC = () => {
-    const { cart, removeFromCart, updateQuantity, getTotal } = useCart();
+    const [products, setProducts] = useState<Product[]>([]); // Estado para guardar los productos
 
-    const shippingCost = 10.0;
+    const getItemsFromCart = () => {
+        const storedCart = localStorage.getItem("cart");
+
+        if (!storedCart) {
+            console.log("No se encontró un carrito en el localStorage.");
+            return []; // Si no hay carrito, retorna un array vacío.
+        }
+
+        try {
+            const cart = JSON.parse(storedCart);
+            const storedToken = localStorage.getItem("token");
+            const user_id:any = jwtDecode(storedToken).id
+
+            const userCart = cart.find((entry: any) => entry.id === user_id);
+            if (!userCart || !userCart.items) {
+                console.log("El carrito del usuario está vacío.");
+                return []; // Si el carrito del usuario no tiene items, retorna un array vacío
+            }
+            return userCart.items  ; // Esto devuelve el array de items [{ id, quantity }, ...]
+        } catch (error) {
+            console.error("Error al parsear el carrito del localStorage:", error);
+            return []; // Manejo robusto en caso de error de parsing
+        }
+    };
+
+
+    useEffect(() => {
+        const items = getItemsFromCart();
+        console.log('items:', items); // Confirma que tienes los datos correctos
+
+        if (items.length === 0) return; // Evita ejecutar la petición si no hay productos
+
+        const productIds = items.map(item => item.id);
+
+        fetchProductsFromCart(productIds).then(productsFromAPI => {
+            // Asigna la cantidad correcta a cada producto
+            const productsWithQuantity = productsFromAPI.map(product => {
+                const itemInCart = items.find(item => item.id === product.id);
+                return { ...product, quantity: itemInCart?.quantity ?? 0 }; // Asigna cantidad o 0 si no se encuentra
+            });
+
+            setProducts(productsWithQuantity);
+        });
+    }, []);
+
+
+
+    const fetchProductsFromCart = async (productsIds: number[]) => {
+        try{
+            const response = await fetch(`${API_CLOTHES}/cart-products`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: productsIds,
+                })
+            });
+            if (!response.ok) {
+                alert(`Error al obtener productos: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);
+
+            if (!data.products || data.products.length === 0) {
+                alert("El backend no devolvió productos.");
+                return [];
+            }
+            setProducts(data.products);
+            return data.products;
+
+        }catch(error){
+            alert("Error al realizar la solicitud:" + error);
+            return [];
+        }
+    };
+
+
+
 
     return (
         <div className="cart-container">
             <h2 className="cart-title">Tu Carrito de Compras</h2>
             <div className="cart-items">
-                {cart.length > 0 ? (
-                    cart.map((item) => (
-                        <div key={item.id} className="cart-item">
-                            <div className="item-details">
-                                <span className="item-name">{item.name}</span>
-                                <span className="item-price">
-                                    ${item.price.toFixed(2)} x {item.quantity}
-                                    <strong> = ${(item.price * item.quantity).toFixed(2)}</strong>
-                                </span>
-                            </div>
-                            <div className="item-quantity">
-                                <button
-                                    className="quantity-button"
-                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                    disabled={item.quantity <= 1}
-                                >
-                                    -
-                                </button>
-                                <span className="quantity-display">{item.quantity}</span>
-                                <button
-                                    className="quantity-button"
-                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                >
-                                    +
-                                </button>
-                            </div>
-                            <button
-                                className="remove-item-button"
-                                onClick={() => removeFromCart(item.id)}
-                            >
-                                Eliminar
-                            </button>
+                {products.length > 0 ? (
+                    products.map((product) => (
+                        <div key={product.id} className="cart-item">
+                            <h3>{product.name}</h3>
+                            <p>Precio: ${product.price}</p>
+                            <p>Cantidad: {product.quantity}</p>
                         </div>
                     ))
                 ) : (
-                    <p>No hay productos en el carrito. ¡Agrega algo desde el catálogo!</p>
+                    <p>No hay productos en tu carrito.</p>
                 )}
             </div>
-            {cart.length > 0 && (
-                <div className="cart-summary">
-                    <div className="summary-item">
-                        <span className="summary-label">Subtotal:</span>
-                        <span className="summary-value">${getTotal().toFixed(2)}</span>
-                    </div>
-                    <div className="summary-item">
-                        <span className="summary-label">Envío:</span>
-                        <span className="summary-value">${shippingCost.toFixed(2)}</span>
-                    </div>
-                    <div className="summary-item">
-                        <span className="summary-label">Total:</span>
-                        <span className="summary-value">
-                            ${(getTotal() + shippingCost).toFixed(2)}
-                        </span>
-                    </div>
-                </div>
-            )}
-            <button className="checkout-button" disabled={cart.length === 0}>
+
+            <button className="checkout-button">
                 Proceder al Pago
             </button>
         </div>
