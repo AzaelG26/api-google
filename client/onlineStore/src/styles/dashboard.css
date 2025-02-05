@@ -23,6 +23,20 @@
     height: 30px;
     border: none;
 }
+
+.form-personal-data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+.form-personal-data input,select{
+    margin: 20px;
+    width: 70%;
+    border-radius: 9px;
+    height: 30px;
+    border: 1px solid gray;
+}
 .add-products button{
     width: 20%;
 }

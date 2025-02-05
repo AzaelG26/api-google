@@ -6,6 +6,8 @@ import order from '../../database/models/order'
 import users from '../../database/models/user'
 import PersonalData from "../../database/models/personalData";
 import personalData from "../../database/models/personalData";
+import roles from "../../database/models/roles";
+import user_rol from "../../database/models/user_rol";
 const createOrderController = async (req: Request, res: Response) => {
         const {products, user_id} = req.body;
     const user= await users.findOne({

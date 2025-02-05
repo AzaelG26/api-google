@@ -2,6 +2,7 @@ import React,  {useState, useContext } from "react"
 import { jwtDecode } from "jwt-decode";
 import {API_DATAPERSON} from "../auth/constants.ts";
 import {Simulate} from "react-dom/test-utils";
+import '../styles/dashboard.css'
 
 const getUserIdFromToken = () => {
     const token = localStorage.getItem("token");
@@ -53,7 +54,8 @@ const PersonalData: React.FC = ()=>{
             alert("Datos enviados correctamente!");
             console.log("Respuesta del servidor:", result);
         }else{
-            alert("Error al enviar la información");
+            const errorResult = await response.json();
+            console.log('error' + errorResult.message)
         }
 
     }catch(error){
@@ -63,7 +65,7 @@ const PersonalData: React.FC = ()=>{
     }
 }
 return(
-    <div>
+    <div className="form-personal-data">
         <label>Name</label>
         <input value={name} type="text" onChange={(e) => setName(e.target.value)}/>
         <br/>

@@ -11,7 +11,7 @@ interface Product {
     quantity: number;
 }
 const Cart: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]); // Estado para guardar los productos
+    const [products, setProducts] = useState<Product[]>([]);
 
     const getItemsFromCart = () => {
         const storedCart = localStorage.getItem("cart");
@@ -91,6 +91,42 @@ const Cart: React.FC = () => {
     };
 
 
+    const handleCheckout = async () => {
+        const storedToken = localStorage.getItem("token");
+        const formattedProducts = products.map(product => ({
+            id: product.id,
+            quantity: product.quantity
+        }));
+
+        if (!storedToken) {
+            alert("Vuelve a iniciar sesion");
+            return
+        };
+        const decodeToken:any = jwtDecode(storedToken);
+        const userId = decodeToken.id;
+        try{
+            const response = await fetch(`${API_CREATE_ORDER}/createOrder`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${storedToken}`
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    products: formattedProducts,
+                })
+            });
+            if (!response.ok) {
+                console.log(`Error al crear la orden: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log("Orden creada con éxito: " + data.message);
+
+
+        }catch(error){
+
+        }
+    }
 
 
     return (
@@ -110,9 +146,10 @@ const Cart: React.FC = () => {
                 )}
             </div>
 
-            <button className="checkout-button">
+            <button className="checkout-button" onClick={handleCheckout}>
                 Proceder al Pago
             </button>
+
         </div>
     );
 };
