@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import '../styles/dashboard.css'
 import {API_PRODUCTS} from "../auth/constants.ts";
 import PersonalData from "../components/personalData.tsx";
+import MapaGoogle from "../components/mapa.tsx";
+
 
 const Dashboard:React.FC = () => {
     const [name, setName] = useState('');
@@ -84,6 +86,9 @@ const Dashboard:React.FC = () => {
                 <br/>
                 <button onClick={handleRegister}>Registrar</button>
             </section>
+
+
+            <MapaGoogle/>
         </div>
     );
 }

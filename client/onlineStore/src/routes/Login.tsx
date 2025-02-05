@@ -5,6 +5,7 @@ import {useAuth} from "../auth/AuthProvider.tsx";
 import {Navigate, resolvePath, useNavigate} from "react-router-dom";
 import {API_URL} from "../auth/constants.ts";
 import {AuthResponse, AuthResponseError} from "../types/types.ts";
+import {jwtDecode} from "jwt-decode";
 
 export default  function Login(){
     const [email, setEmail] = useState("");
@@ -34,6 +35,9 @@ export default  function Login(){
                 console.log("You are Log in")
                 console.log(data.token);
                 auth.saveUser(data);
+                const token = data.token;
+                const decodedToken:any = jwtDecode(token)
+                initialCart(decodedToken.id);
                 setErrorResponse("");
                 goTo('/dashboard');
             }
@@ -49,6 +53,27 @@ export default  function Login(){
 
     if (auth.isAuthenticated){
         return <Navigate to="/dashboard"/>
+    }
+
+    const initialCart = (id: string) =>{
+        const existingCart = localStorage.getItem("cart");
+        if (!existingCart) {
+            const newCart = [{ id: id, items: [] }];
+            localStorage.setItem("cart", JSON.stringify(newCart));
+            console.log(`Carrito creado en localStorage para el usuario ${id}`);
+        }
+        else{
+            const cart = JSON.parse(existingCart);
+            const userCart = cart.find((item: { id: string }) => item.id === id);
+            if (!userCart) {
+                cart.push({ id: id, items: [] });
+                localStorage.setItem("cart", JSON.stringify(cart));
+                console.log(`Carrito creado en localStorage para el usuario ${id}`);
+            }
+            else{
+                console.log(`Carrito ya existe en localStorage para el usuario ${id}`);
+            }
+        }
     }
 
     return(

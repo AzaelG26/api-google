@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import '../styles/children.css';
 import axios from 'axios';
 import {API_CLOTHES} from "../auth/constants.ts";
+import {jwtDecode} from "jwt-decode";
 
 // Interfaz para representar un producto
 interface Product {
     id: number;
     name: string;
-    description: string;
-    category?: string;
-    price?: number; // Puedes agregar más propiedades si son enviadas desde el backend
+    category: string;
+    price: number;
 }
 
 const Children: React.FC = () => {
@@ -17,6 +17,8 @@ const Children: React.FC = () => {
     const [cart, setCart] = useState<{ [key: number]: number }>({}); // Estado para el carrito
     const [loading, setLoading] = useState<boolean>(true); // Estado para indicar carga
     const [error, setError] = useState<string | null>(null); // Estado para manejar errores
+    const storedToken = localStorage.getItem("token");
+    const user_id = jwtDecode(storedToken).id
 
 
     const fetchProducts = async () => {
@@ -56,8 +58,38 @@ const Children: React.FC = () => {
     };
 
     // Handler para añadir productos al carrito
-    const handleAddToCart = (productId: number) => {
+    const handleAddToCart = (productId: number, quantity: number) => {
         handleQuantityChange(productId, 1);
+        const storedCartInLocalStorage = localStorage.getItem("cart");
+        if (!storedCartInLocalStorage) {
+            const newCart = [{ id: user_id, items: [] }];
+            localStorage.setItem("cart", JSON.stringify(newCart));
+        }else{
+            const cart = JSON.parse(storedCartInLocalStorage);
+            const userCart = cart.find((item: { id: string }) => item.id === user_id);
+            if (!userCart) {
+                cart.push({ id: user_id, items: [] });
+                localStorage.setItem("cart", JSON.stringify(cart));
+                alert(`Carrito creado en localStorage para el usuario ${user_id}`);
+            }
+
+            const updatedCart = localStorage.getItem("cart");
+            if (updatedCart) {
+                const cart = JSON.parse(updatedCart);
+                const userCart = cart.find((item: { id: string }) => item.id === user_id);
+                if (userCart) {
+                    const existingProduct = userCart.items.find((item: { id: number }) => item.id === productId);
+                    if(existingProduct){
+                        existingProduct.quantity += quantity;
+                    }else{
+                        userCart.items.push({ id: productId, quantity: quantity });
+                    }
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    alert(`Producto agregado al carrito para el usuario ${user_id}`);
+                }
+            }
+        }
+        alert(`Producto agregado. ID: ${productId}, Cantidad: ${quantity}`);
     };
 
     // Filtrar productos por categoría "children"
@@ -77,7 +109,6 @@ const Children: React.FC = () => {
                         <li key={product.id} className="product-item">
                             <div className="product-info">
                                 <h3 className="product-name">{product.name}</h3>
-                                <p className="product-description">{product.description}</p>
                                 {product.price && (
                                     <p className="product-price">Precio: ${product.price}</p>
                                 )}
@@ -100,7 +131,7 @@ const Children: React.FC = () => {
                             </div>
                             <button
                                 className="add-to-cart-button"
-                                onClick={() => handleAddToCart(product.id)}
+                                onClick={() => handleAddToCart(product.id, cart[product.id] || 1)}
                             >
                                 Agregar al Carrito
                             </button>

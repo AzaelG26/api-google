@@ -12,6 +12,7 @@ import Home from "./pages/Home.tsx";
 import Women from "./pages/women.tsx";
 import Children from "./pages/children.tsx";
 import Cart from "./pages/Cart.tsx";
+import MapaGoogle from "./components/mapa.tsx";
 
 
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
                 path: '/dashboard',
                 element: <Dashboard></Dashboard>
             },
+            {
+                path: '/maps',
+                element: <MapaGoogle></MapaGoogle>
+            }
         ]
     }
 ]);

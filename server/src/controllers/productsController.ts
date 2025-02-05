@@ -30,7 +30,7 @@ const createProduct = async (req: Request, res: Response) => {
     }catch(err){
         // Respuesta bien formada, asegurando que siempre haya un mensaje JSON
         res.status(500).json({
-            message: "Algo salió mal al crear el producto",
+            message: "Algo salió mal al crear el producto" + err,
             error: err instanceof Error ? err.message : JSON.stringify(err)
         });
 
